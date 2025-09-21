@@ -1,5 +1,6 @@
 import { mockMovies } from "@/lib/movies";
 import Image from "next/image";
+import Link from "next/link";
 
 export const revalidate = 30; // ISR: обновление каждые 30 секунд
 
@@ -13,15 +14,22 @@ export default async function MoviesPage() {
       <ul className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {movies.map((movie) => (
           <li key={movie.id} className="text-center">
-            <Image
-              width={1383}
-              height={2048}
-              src={movie.poster}
-              alt={movie.title}
-              className="rounded shadow"
-            />
-            <p className="mt-2 font-semibold">{movie.title}</p>
-            <p className="text-gray-500 text-sm">{movie.year}</p>
+            <Link
+              href={`/movies/${movie.id}`}
+              className="block hover:opacity-80"
+            >
+              <div className="relative w-[300px] h-[450px]">
+                <Image
+                  src={movie.poster}
+                  alt={movie.title}
+                  fill
+                  className="rounded shadow object-cover"
+                />
+              </div>
+
+              <p className="mt-2 font-semibold">{movie.title}</p>
+              <p className="text-gray-500 text-sm">{movie.year}</p>
+            </Link>
           </li>
         ))}
       </ul>
